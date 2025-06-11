@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     const nombreInput = document.getElementById('nombre');
     const emailInput =  document.getElementById('correo');
     const passwordInput = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirmPassword');
+    const confirmPasswordInput = document.getElementById('confirmPassword');
 
     const errorNombre = document.getElementById('errorNombre');
     const errorEmail = document.getElementById('errorCorreo');
@@ -50,6 +50,42 @@ document.addEventListener('DOMContentLoaded',()=>{
             mostrarError(errorNombre, nombreInput, 'El nombre es requerido');
             formValido = false;
         } 
+
+        //realizamos validación de correo.
+        const emailpattern = /^[^\s@]+@[^\s@]+.\[^\s@]+$/;
+        if (emailInput.value.trim()===''){
+            mostrarError(errorEmail, emailInput, 'El correo es requerido');
+            formValido = false;
+        }else if(!emailpattern.test(emailInput.valu.trim())){
+          mostrarError(errorEmail, emailInput, 'Ingrese un correo válido');
+            formValido = false;   
+        }
+        //validacion de contraseña
+
+        if (passwordInput.value.trim()===''){
+            mostrarError(errorPassword, passwordInput, 'La contraseña es requerida');
+            formValido = false;        
+        }else if (passwordInput.value.trim().lenght < 6){
+            mostrarError(errorPassword, passwordInput, 'La contraseña debe ser igual o mayor a 6');
+            formValido = false;   
+        }
+
+
+        //validacion de la confirmación de contraseña
+        if (confirmPasswordInput.value.trim()===''){
+            mostrarError(errorConfirm, confirmPasswordInput, 'Debe de ingresar la contraseña');
+            formValido = false;        
+        }else if (confirmPasswordInput.value !== passwordInput.value){
+            mostrarError(errorConfirm, confirmPasswordInput, 'Las contraseñas deben ser iguales');
+            formValido = false;     
+        }
+
+        // Si el formulario es valido, mostrar el mensajhe de eisto 
+        if (formValido){
+            sucessMessage.style.direction = 'block';
+            registroForm.reset();
+            console.log('Formulario enviado correctamente');   
+        }
     })
 
 })
